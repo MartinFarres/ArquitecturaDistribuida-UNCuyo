@@ -25,10 +25,10 @@ void taylor_ln_partial(long double x, unsigned int start, unsigned int end, long
 
 int main()
 {
-  long double number;
+  long long number;
   std::cout << "Ingrese un número mayor a 1500000: ";
   std::cin >> number;
-
+  number = number * 1000000000000;
   unsigned int num_threads;
   std::cout << "Ingrese el número de hilos: ";
   std::cin >> num_threads;

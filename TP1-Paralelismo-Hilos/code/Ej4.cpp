@@ -109,7 +109,7 @@ int main()
 
   // Mostrar la cantidad total de números primos
   std::cout << "Cantidad total de números primos menores que " << N << ": " << primes.size() << std::endl;
-  std::cout << "Tiempo de ejecución (con multihilos): " << execution_time << " segundos" << std::endl;
+  std::cout << "Tiempo de ejecución: " << execution_time << " segundos" << std::endl;
 
   return 0;
 }

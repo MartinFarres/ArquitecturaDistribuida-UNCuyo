@@ -10,14 +10,14 @@ double get_time_difference(timeval start, timeval end)
   return double(end.tv_sec - start.tv_sec) + double(end.tv_usec - start.tv_usec) / 1000000;
 }
 
-// Función para inicializar matrices con valores aleatorios
-void initialize_matrix(std::vector<std::vector<float>> &matrix, int N)
+// Función para inicializar una matriz con un valor fijo
+void initialize_matrix_with_value(std::vector<std::vector<float>> &matrix, int N, float value)
 {
   for (int i = 0; i < N; ++i)
   {
     for (int j = 0; j < N; ++j)
     {
-      matrix[i][j] = static_cast<float>(rand()) / RAND_MAX;
+      matrix[i][j] = value;
     }
   }
 }
@@ -75,9 +75,9 @@ int main()
   std::vector<std::vector<float>> B(N, std::vector<float>(N));
   std::vector<std::vector<float>> C(N, std::vector<float>(N));
 
-  // Inicializar las matrices A y B con valores aleatorios
-  initialize_matrix(A, N);
-  initialize_matrix(B, N);
+  // Inicializar la matriz A con 0.1 y la matriz B con 0.2
+  initialize_matrix_with_value(A, N, 0.1f);
+  initialize_matrix_with_value(B, N, 0.2f);
 
   timeval time1, time2;
   gettimeofday(&time1, NULL);
@@ -116,7 +116,7 @@ int main()
   float sum_result = sum_matrix(C, N);
   std::cout << "Sumatoria de todos los elementos de la matriz C: " << sum_result << std::endl;
 
-  std::cout << "Tiempo de ejecución (con multihilos): " << execution_time << " segundos" << std::endl;
+  std::cout << "Tiempo de ejecución: " << execution_time << " segundos" << std::endl;
 
   return 0;
 }
