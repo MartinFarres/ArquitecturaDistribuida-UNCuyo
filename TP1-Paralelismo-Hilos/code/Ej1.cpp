@@ -1,9 +1,9 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath>
-#include <chrono>
 #include <thread>
 #include <vector>
+#include <sys/time.h>
 
 const unsigned int terms = 10000000; // 10 millones de términos
 
@@ -29,26 +29,18 @@ int main()
   std::cout << "Ingrese un número mayor a 1500000: ";
   std::cin >> number;
 
-  if (number <= 1500000)
-  {
-    std::cerr << "El número debe ser mayor a 1500000." << std::endl;
-    return 1;
-  }
-
   unsigned int num_threads;
   std::cout << "Ingrese el número de hilos: ";
   std::cin >> num_threads;
 
-  if (num_threads == 0 || num_threads > terms)
-  {
-    std::cerr << "Número de hilos inválido." << std::endl;
-    return 1;
-  }
-
   std::vector<std::thread> threads;
   std::vector<long double> results(num_threads, 0.0);
 
-  auto start = std::chrono::high_resolution_clock::now();
+  // Declarar variables de tiempo
+  struct timeval time1, time2;
+
+  // Iniciar la medición de tiempo
+  gettimeofday(&time1, NULL);
 
   // Dividir el trabajo entre los hilos
   unsigned int terms_per_thread = terms / num_threads;
@@ -70,11 +62,15 @@ int main()
     final_result += partial;
   }
 
-  auto end = std::chrono::high_resolution_clock::now();
-  std::chrono::duration<double> elapsed = end - start;
+  // Terminar la medición de tiempo
+  gettimeofday(&time2, NULL);
+
+  // Calcular el tiempo de ejecución
+  double execution_time = double(time2.tv_sec - time1.tv_sec) +
+                          double(time2.tv_usec - time1.tv_usec) / 1000000;
 
   std::cout << "ln(" << number << ") = " << std::setprecision(15) << final_result << std::endl;
-  std::cout << "Tiempo de ejecución: " << elapsed.count() << " segundos" << std::endl;
+  std::cout << "Tiempo de ejecución: " << execution_time << " segundos" << std::endl;
 
   return 0;
 }
